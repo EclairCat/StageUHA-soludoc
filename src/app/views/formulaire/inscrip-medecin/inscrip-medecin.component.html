@@ -1,0 +1,129 @@
+<form class="container-fluid" (ngSubmit)="onSubmit()" #medecinForm="ngForm" novalidate>
+
+    <h1>Inscription Medecin</h1>
+  
+    <!--Email -->
+    <div class="form-group">
+      <label for="email">
+        Email : *
+      </label>
+      <input  (blur)="emailChange()" (change)="emailChange()"  
+      type="email" 
+      #email="ngModel" 
+      [class.is-invalid]="email.invalid && email.touched || emailNonValid" 
+      class="form-control" name="email" 
+      [(ngModel)]="medecinModel.email" required>
+      <small *ngIf="email.invalid && email.touched" class="text-danger">Email obligatoire</small>
+      <small *ngIf="emailNonValid" class="text-danger">l'Email est déjà pris</small>
+  
+    </div>
+  
+    <!-- Mdp -->
+    <div class="form-group">
+      <label for="mdp">
+        Mot de passe : *
+      </label>
+      <input (blur)="validateMdp(mdp.value, mdpconfirm.value)" 
+      (change)="validateMdp(mdp.value, mdpconfirm.value)" 
+      type="password" 
+      #mdp="ngModel" 
+      [class.is-invalid]="mdp.invalid && mdp.touched || mdpNonEgal || mdpCourt || mdpNonValide"
+      [class.is-valid]="!mdpCourt && !mdpNonEgal && mdp.touched && !mdpNonValide" 
+      class="form-control" 
+      name="mdp" 
+      [(ngModel)]="medecinModel.mdp" 
+      required>
+      <div *ngIf="mdp.errors && mdp.touched && mdp.invalid">
+        <small class="text-danger" *ngIf="mdp.errors.required"> Mot de passe Obligatoire </small>
+      </div>
+      <small *ngIf="mdpCourt" class="text-danger">Le Mot de passe est trop court</small>
+      <small *ngIf="mdpNonValide" class="text-danger">Le Mot de passe doit contenir au moins 1 lettre, 1 chiffre et 1 caractère spécial</small>
+  
+    </div>
+  
+    <!-- Confirm Mdp -->
+    <div class="form-group">
+      <label for="mdpconfirm">
+        Confirmation du mot de passe :
+      </label>
+      <input (blur)="validateMdp(mdp.value, mdpconfirm.value)"
+      (change)="validateMdp(mdp.value, mdpconfirm.value)" 
+      type="password" 
+      #mdpconfirm="ngModel" 
+      [class.is-invalid]="mdpconfirm.invalid && mdpconfirm.touched || mdpNonEgal "
+      [class.is-valid]="!mdpCourt && !mdpNonEgal && mdp.touched && !mdpNonValide"  
+      class="form-control"
+      name="mdpconfirm" 
+      ngModel 
+      required>    
+      <small class="text-danger" *ngIf="mdpNonEgal">Les Mots de passe ne sont pas pareil (le copier-coller ne colle pas votre mdp)</small>
+  
+    </div>
+  
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="nom">
+        Nom : *
+      </label>
+      <input type="text" #nom="ngModel" 
+      [class.is-invalid]="nom.invalid && nom.touched" 
+      class="form-control" name="nom" [(ngModel)]="medecinModel.nom" required>
+      <small *ngIf="nom.invalid && nom.touched" class="text-danger">nom obligatoire</small>
+    </div>
+  
+    <!-- Prenom -->
+    <div class="form-group">
+      <label for="prenom">
+        Prenom : *
+      </label>
+      <input type="text" #prenom="ngModel" 
+      [class.is-invalid]="prenom.invalid && prenom.touched" 
+      class="form-control" name="prenom" [(ngModel)]="medecinModel.prenom" required>
+      <small *ngIf="prenom.invalid && prenom.touched" class="text-danger">prenom obligatoire</small>
+
+    </div>
+  
+    <!-- Tel -->
+    <div class="form-group">
+      <label for="tel">
+        Numéro de telephone personel : *
+      </label>
+      <input type="text" #tel="ngModel" [class.is-invalid]="tel.invalid && tel.touched" class="form-control" pattern="^\d{10}$" name="tel" 
+      [(ngModel)]="medecinModel.tel" required>
+      <small *ngIf="tel.invalid && tel.touched" class="text-danger">Le numero de telephone doit contenir 10 chiffres</small><br>
+      <small *ngIf="tel.invalid && tel.touched" class="text-danger">Le numero de telephone est obligatoire</small>  
+    </div>
+
+    <!-- Cabinet Tel -->
+    <div class="form-group">
+        <label for="cabtel">
+          Numéro de telephone du cabinet : *
+        </label>
+        <input type="text" #cabtel="ngModel" [class.is-invalid]="cabtel.invalid && cabtel.touched" class="form-control" pattern="^\d{10}$" 
+        name="cabtel" [(ngModel)]="medecinModel.cabtel" required>
+        <small *ngIf="cabtel.invalid && cabtel.touched" class="text-danger">Le numero de telephone doit contenir 10 chiffres</small><br>
+        <small *ngIf="cabtel.invalid && cabtel.touched" class="text-danger">Le numero de telephone est obligatoire</small>  
+
+      </div>
+
+    <!-- Adresse -->
+    <div class="form-group">
+        <label for="adress">
+          Adresse du Cabinet : *
+        </label>
+        <input type="text" #adress="ngModel"
+        [class.is-invalid]="adress.invalid && adress.touched" 
+        class="form-control" name="adress" [(ngModel)]="medecinModel.adress" required>
+        <small *ngIf="adress.invalid && adress.touched" class="text-danger">L'adresse est obligatoire</small>  
+
+    </div>
+  
+    <p class="text-danger">* Champ Obligatoire</p>
+  
+    <button class="btn btn-primary" type="submit" [disabled]="medecinForm.invalid || !formValid">Confirmer</button>
+  
+    <div *ngIf="inscriptionSubmit == 1" class="alert alert-success">Inscription Réussit </div>
+    <div *ngIf="inscriptionSubmit == 2" class="alert alert-danger">Il y a eu une erreur veuillez reessayer plus tard.</div>
+  
+  </form>
+  

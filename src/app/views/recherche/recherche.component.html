@@ -1,0 +1,44 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <h2>Rechercher votre medecin</h2>
+  <div class="form-group">
+    <label for="sel1">Specialité :</label>
+    <select class="form-control" id="sel1">
+      <option *ngFor="let spe of listSpe">{{spe.nom_specialite}}</option>
+     
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="status">
+      Ville
+    </label>
+    <input type="text" id="name" class="form-control" name="name" ngModel>
+  </div>
+</form>
+
+<button class="btn btn-primary" type="submit">Recherche</button>
+
+<h2> test Get Request </h2>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>nom</th>
+    <th>prenom</th>
+    <th>tel</th>
+    <th>cabtel</th>
+    <th>adress</th>
+    <th>bio</th>
+    <th>urlImg</th>
+
+  </tr>
+  <tr *ngFor="let m of listMedecin">
+    <th>{{m.id}}</th>
+    <th>{{m.nom}}</th>
+    <th>{{m.prenom}}</th>
+    <th>{{m.tel}}</th>
+    <th>{{m.cabinet_tel}}</th>
+    <th>{{m.adresse}}</th>
+    <th>{{m.bio_profil}}</th>
+    <th>{{m.url_img}}</th>
+  </tr>
+</table>
