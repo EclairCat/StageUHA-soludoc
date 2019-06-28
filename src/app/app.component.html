@@ -10,28 +10,66 @@
     <!-- Onglet de navigation -->
     <ul class="navbar-nav mr-auto">
       <li routerLinkActive="active" class="nav-item active">
-        <a class="nav-link text-white nav-size-text" routerLink="home">Acceuil</a>
+        <a class="nav-link text-white nav-size-text" routerLink="home">Accueil</a>
+      </li>     
+
+      <li *ngIf="authService.loggedIn() && authService.isClient()" routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="rdv">Rendez-Vous</a>
       </li>
-      <li routerLinkActive="active" class="nav-item">
-        <a class="nav-link text-white nav-size-text" routerLink="tips">Conseil</a>
+      <li *ngIf="authService.loggedIn() && (authService.isMedecin() || authService.isSecretaire())" routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="rdv-medecin">Rendez-Vous</a>
+      </li>
+
+      <!-- Espace Client -->
+
+      <li *ngIf="authService.loggedIn() && authService.isClient()" routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="userProfil">Profil</a>
+      </li>
+
+
+      <!-- Espace Medecin -->
+      <li *ngIf="authService.loggedIn() && authService.isMedecin()" routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="medecinProfil">Profil Médecin</a>
+      </li>
+
+      <li *ngIf="authService.loggedIn() && authService.isMedecin()" routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="espaceMedecin">Espace Médecin</a>
+      </li>
+
+      <li *ngIf="authService.loggedIn() && (authService.isMedecin() || authService.isSecretaire())"
+        routerLinkActive="active" class="nav-item">
+        <a class="nav-link text-white nav-size-text" routerLink="cabinet">Cabinet</a>
       </li>
     </ul>
 
     <!-- Bouton  -->
     <ul class="nav justify-content-end">
-      <li routerLinkActive="active" class="nav-item m-1">
+      <li *ngIf="this.authService.loggedIn() && this.authService.isClient() " class="nav-item m-1">
+        <p class="text-white">Connecté en tant que Client </p>
+      </li>
+      <li *ngIf="this.authService.loggedIn() && this.authService.isMedecin() " class="nav-item m-1">
+          <p class="text-white">Connecté en tant que Medecin</p>
+      </li>
+      <li *ngIf="this.authService.loggedIn() && this.authService.isSecretaire() " class="nav-item m-1">
+          <p class="text-white">Connecté en tant que Secretaire</p>
+      </li>
+      <li *ngIf="!this.authService.loggedIn() || (this.authService.loggedIn()  && this.authService.isClient()) " routerLinkActive="active" class="nav-item m-1">
         <a class="nav-link text-white btn btn-primary" routerLink="search">Rechercher un Medecin</a>
       </li>
-      <li routerLinkActive="active" class="nav-item m-1">
+      <li *ngIf="!authService.loggedIn()" routerLinkActive="active" class="nav-item m-1">
         <a class="nav-link text-white btn btn-success" routerLink="register">Créer un compte</a>
       </li>
-      <li routerLinkActive="active" class="nav-item m-1">
-        <a class="nav-link text-white btn btn-primary" routerLink="log-in">Se connecter</a>
+      <li *ngIf="!authService.loggedIn()" routerLinkActive="active" class="nav-item m-1">
+        <a class="nav-link text-white btn btn-primary" routerLink="log-in/client">Se Connecter</a>
+      </li>
+      <li *ngIf="authService.loggedIn()" routerLinkActive="active" class="nav-item m-1">
+        <a class="nav-link text-white btn btn-danger" (click)="logout()">Se Déconnecter</a>
       </li>
     </ul>
   </div>
 </nav>
 
+<!-- Contenue Site -->
 <div class="site-bg">
 
   <div class="container">

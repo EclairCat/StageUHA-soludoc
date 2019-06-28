@@ -1,44 +1,59 @@
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <h2>Rechercher votre medecin</h2>
-  <div class="form-group">
-    <label for="sel1">Specialité :</label>
-    <select class="form-control" id="sel1">
-      <option *ngFor="let spe of listSpe">{{spe.nom_specialite}}</option>
-     
-    </select>
+<div class="container-fluid">
+  <form (ngSubmit)="recherche()" #searchForm="ngForm">
+
+    <div class="row col2">
+      <h2>Rechercher votre medecin</h2>
+    </div>
+
+    <div class="row">
+      <!--Nom -->
+      <div class="form-group">
+        <label for="name">Nom </label>
+        <input #name type="text" #nom="ngModel" name="nom" class="form-control" [(ngModel)]="medecinModel.nom">
+      </div>
+      <!--Prenom-->
+      <div class="form-group">
+        <label for="name">Prenom </label>
+        <input #name type="text" #prenom="ngModel" name="prenom" class="form-control" [(ngModel)]="medecinModel.prenom">
+      </div>
+    </div>
+
+    <div class="row">
+      <!--Specialite -->
+      <div class="form-group">
+        <label for="specialite">Specialité :</label>
+        <select class="form-control" #specialite="ngModel" name="specialite"  [(ngModel)]="medecinModel.specialite">
+          <option [ngValue]="null">Selectionner la specialite</option>
+          <option *ngFor="let spe of listSpe">{{spe.nom_specialite}}</option>
+        </select>
+      </div>
+      <!-- Ville -->
+      <div class="form-group">
+        <label for="ville">
+          Ville :
+        </label>
+        <input type="text" #ville="ngModel" name="ville" class="form-control" [(ngModel)]="medecinModel.ville">
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn btn-primary" type="submit">Recherche</button>
+    </div>
+    <div *ngIf="resultNotfound" class="row">
+      <small class="alert alert-danger">Aucun resultat trouver</small>
+    </div>
+
+  </form>
+
+
+  <hr />
+
+  <h2>Liste des Medecins</h2>
+  <div *ngIf="!afficherListRecherche">
+    <app-recherche-single class="col" *ngFor="let medecin of listMedecin" [medecin]="medecin"></app-recherche-single>
   </div>
-  <div class="form-group">
-    <label for="status">
-      Ville
-    </label>
-    <input type="text" id="name" class="form-control" name="name" ngModel>
+  <div *ngIf="afficherListRecherche">
+    <app-recherche-single class="col" *ngFor="let medecin of listMedecinCritere" [medecin]="medecin">
+    </app-recherche-single>
   </div>
-</form>
-
-<button class="btn btn-primary" type="submit">Recherche</button>
-
-<h2> test Get Request </h2>
-
-<table>
-  <tr>
-    <th>Id</th>
-    <th>nom</th>
-    <th>prenom</th>
-    <th>tel</th>
-    <th>cabtel</th>
-    <th>adress</th>
-    <th>bio</th>
-    <th>urlImg</th>
-
-  </tr>
-  <tr *ngFor="let m of listMedecin">
-    <th>{{m.id}}</th>
-    <th>{{m.nom}}</th>
-    <th>{{m.prenom}}</th>
-    <th>{{m.tel}}</th>
-    <th>{{m.cabinet_tel}}</th>
-    <th>{{m.adresse}}</th>
-    <th>{{m.bio_profil}}</th>
-    <th>{{m.url_img}}</th>
-  </tr>
-</table>
+</div>

@@ -5,7 +5,7 @@
   <!--Email -->
   <div class="form-group">
     <label for="email">
-      Email : *
+      * Email : 
     </label>
     <input  (blur)="emailChange()" (change)="emailChange()"  type="email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched || emailNonValid" class="form-control" name="email" [(ngModel)]="clientModel.email" required>
     <small *ngIf="email.invalid && email.touched" class="text-danger">Email obligatoire</small>
@@ -16,7 +16,7 @@
   <!-- Mdp -->
   <div class="form-group">
     <label for="mdp">
-      Mot de passe : *
+      * Mot de passe : 
     </label>
     <input (blur)="validateMdp(mdp.value, mdpconfirm.value)" 
     (change)="validateMdp(mdp.value, mdpconfirm.value)" 
@@ -58,17 +58,20 @@
   <!-- Nom -->
   <div class="form-group">
     <label for="nom">
-      Nom :
+      * Nom :
     </label>
-    <input type="text" #nom="ngModel" class="form-control" name="nom" [(ngModel)]="clientModel.nom">
+    <input type="text" #nom="ngModel" [class.is-invalid]="nom.invalid && nom.touched" class="form-control" name="nom" [(ngModel)]="clientModel.nom" required>
+    <small *ngIf="nom.invalid && nom.touched" class="text-danger">Nom obligatoire</small>
+
   </div>
 
   <!-- Prenom -->
   <div class="form-group">
     <label for="prenom">
-      Prenom :
+     * Prenom :
     </label>
-    <input type="text" #prenom="ngModel" class="form-control" name="prenom" [(ngModel)]="clientModel.prenom">
+    <input type="text" #prenom="ngModel"  [class.is-invalid]="prenom.invalid && prenom.touched" class="form-control" name="prenom" [(ngModel)]="clientModel.prenom" required>
+    <small *ngIf="prenom.invalid && prenom.touched" class="text-danger">Prenom obligatoire</small>
   </div>
 
   <!-- Tel -->

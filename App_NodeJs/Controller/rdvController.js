@@ -1,9 +1,12 @@
 //Imports
 var db = require("../db");
 var bcrypt = require("bcrypt");
+var jwt = require('jsonwebtoken');
+
 
 module.exports = {
 
+    //Ajoute un Rdv
     addRdv: function (req, res) {
         //Params
         var idM = req.body.id_medecin;
@@ -12,34 +15,32 @@ module.exports = {
 
 
         var sql = 'INSERT INTO `t_rdv` ( id_medecin, id_client, date_rdv) VALUES ("' + idM + '","' + idC + '","' + date + '")';
-        console.log(sql);
 
 
         db.getConnection(function (err, tempCo) {
             if (!!err) {
                 console.log("error in connection");
-                tempCo.release();
+                req.status(500).send("Error connection to database");
             }
             else {
-
                 db.query(sql, function (error, rows, fields) {
                     tempCo.release();
                     if (!!error) {
                         console.log("error in query AddRDV");
-                        console.log(error);
-                        res.status("500").json();
+                        console.log(error.message);
+                        res.status(500).send("Error in query");
 
                     }
                     else {
                         console.log("Success query AddRdv");
-                        res.status("200").json();
-
+                        res.status(200).json();
                     }
                 });
             }
         });
     },
 
+    //Modifie la date du Rdv
     editRdv: function (req, res) {
         //Params
         var id_rdv = req.body.id_rdv;
@@ -47,46 +48,44 @@ module.exports = {
 
 
         var sql = 'UPDATE `t_rdv` SET date_rdv = "' + date + '" WHERE t_rdv.id_rdv = ' + id_rdv;
-        console.log(sql);
 
 
         db.getConnection(function (err, tempCo) {
             if (!!err) {
                 console.log("error in connection");
-                tempCo.release();
+                req.status(500).send("Error connection to database");
             }
             else {
-
                 db.query(sql, function (error, rows, fields) {
                     tempCo.release();
                     if (!!error) {
                         console.log("error in query AddRDV");
-                        console.log("query : [ " + sql + " ]");
-                        res.status("500").json();
+                        console.log(error.message);
+                        res.status(500).send("Error in query");
 
                     }
                     else {
                         console.log("Success query AddRdv");
-                        res.status("200").json();
+                        res.status(200).json();
                     }
                 });
             }
         });
     },
 
+    //Suprime un Rdv
     deleteRdv: function (req, res) {
         //Params
         var idRdv = req.body.id_rdv;
 
 
         var sql = 'DELETE FROM t_rdv WHERE id_rdv = ' + idRdv;
-        console.log(sql);
 
 
         db.getConnection(function (err, tempCo) {
             if (!!err) {
                 console.log("error in connection");
-                tempCo.release();
+                req.status(500).send("Error connection to database");
             }
             else {
 
@@ -94,32 +93,32 @@ module.exports = {
                     tempCo.release();
                     if (!!error) {
                         console.log("error in query DeleteRDV");
-                        console.log("query : [ " + sql + " ]");
-                        res.status("500").json();
+                        console.log(error.message);
+                        res.status(500).send("Error in query");
 
                     }
                     else {
                         console.log("Success query DeleteRdv");
-                        res.status("200").json();
-
+                        res.status(200).json();
                     }
                 });
             }
         });
     },
 
-
+    //Renvoie les rendez vous du Medecin
     getRdvMedecin: function (req, res) {
         //Params
-        var idM = req.params.id_medecin;
-        var sql = "SELECT * FROM `t_rdv` WHERE id_medecin = " + idM;
-        console.log(sql);
+
+        var token = req.params.id_medecin;
+        var idM = jwt.decode(token);
+        var sql = "SELECT * FROM `t_rdv` WHERE id_medecin = " + idM.subject;
 
 
         db.getConnection(function (err, tempCo) {
             if (!!err) {
                 console.log("error in connection");
-                tempCo.release();
+                req.status(500).send("Error connection to database");
             }
             else {
 
@@ -129,30 +128,31 @@ module.exports = {
                         tempCo.release();
                         if (!!error) {
                             console.log("error in query GetRdvMedecin");
-                            console.log("query : [ " + sql + " ]");
-                            res.status("500").json();
+                            console.log(error.message);
+                            res.status(500).send("Error in query");
 
                         }
                         else {
                             console.log("Success query GetRdvMedecin");
-                            res.json(rows);
+                            res.status(200).json(rows);
                         }
                     });
             }
         });
     },
 
+    //Renvoie les Rendez vous du Client
     getRdvClient: function (req, res) {
         //Params
-        var idC = req.params.id_client;
-        var sql = "SELECT * FROM `t_rdv` WHERE id_client = " + idC;
-        console.log(sql);
+        var token = req.params.id_client;
+        var idC = jwt.decode(token);
+        var sql = "SELECT * FROM `t_rdv` WHERE id_client = " + idC.subject;
 
 
         db.getConnection(function (err, tempCo) {
             if (!!err) {
                 console.log("error in connection");
-                tempCo.release();
+                req.status(500).send("Error connection to database");
             }
             else {
 
@@ -162,18 +162,78 @@ module.exports = {
                         tempCo.release();
                         if (!!error) {
                             console.log("error in query GetRdvClient");
-                            console.log("query : [ " + sql + " ]");
-                            res.status("500").json();
+                            console.log(error.message);
+                            res.status(500).send("Error in query");
 
                         }
                         else {
                             console.log("Success query GetRdvClient");
-                            res.json(rows);
+                            res.status(200).json(rows);
                         }
                     });
             }
         });
     },
+
+    //rend la confirmation du rdv en confirmer
+    confirmRdv: function (req, res) {
+        id_rdv = req.body.id_rdv;
+
+        sql = 'UPDATE `t_rdv` SET confirmation = "Confirmer"  WHERE t_rdv.id_rdv = ' + id_rdv;
+
+        db.getConnection(function (err, tempCo) {
+            if (!!err) {
+                console.log("error in connection");
+                req.status(500).send("Error connection to database");
+            }
+            else {
+                db.query(sql, function (error, rows, fields) {
+                    tempCo.release();
+                    if (!!error) {
+                        console.log("error in query confirmRdv");
+                        console.log(error.message);
+                        res.status(500).send("Error in query");
+
+                    }
+                    else {
+                        console.log("Success query Confirm Rdv");
+                        res.status(200).json();
+                    }
+                });
+            }
+        });
+
+    },
+
+    //rend la confirmation du rdv en refuser
+    denieRdv: function (req, res){
+        id_rdv = req.body.id_rdv;
+
+        sql = 'UPDATE `t_rdv` SET confirmation = "Refuser"  WHERE t_rdv.id_rdv = ' + id_rdv;
+
+        db.getConnection(function (err, tempCo) {
+            if (!!err) {
+                console.log("error in connection");
+                req.status(500).send("Error connection to database");
+            }
+            else {
+                db.query(sql, function (error, rows, fields) {
+                    tempCo.release();
+                    if (!!error) {
+                        console.log("error in query AddRDV");
+                        console.log(error.message);
+                        res.status(500).send("Error in query");
+
+                    }
+                    else {
+                        console.log("Success query denieRdv");
+                        res.status(200).json();
+                    }
+                });
+            }
+        });
+
+    }
 
 
 }

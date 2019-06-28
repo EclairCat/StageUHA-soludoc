@@ -1,0 +1,33 @@
+<h3>Changement de Mot de passe</h3>
+
+<div class="form-group">
+  <label for="mdp">
+    Nouveau Mot de passe :
+  </label>
+  <input (blur)="validateMdp(mdp.value, mdpconfirm.value)" (change)="validateMdp(mdp.value, mdpconfirm.value)"
+    type="password" #mdp="ngModel"
+    [class.is-invalid]="mdp.invalid && mdp.touched || mdpNonEgal || mdpCourt || mdpNonValide"
+    [class.is-valid]="!mdpCourt && !mdpNonEgal && mdp.touched && !mdpNonValide" class="form-control" name="mdp"
+    [(ngModel)]="clientModel.mdp" required>
+  <div *ngIf="mdp.errors && mdp.touched && mdp.invalid">
+    <small class="text-danger" *ngIf="mdp.errors.required"> Mot de passe Obligatoire </small>
+  </div>
+  <small *ngIf="mdpCourt" class="text-danger">Le Mot de passe est trop court</small>
+  <small *ngIf="mdpNonValide" class="text-danger">Le Mot de passe doit contenir au moins 1 lettre, 1 chiffre et 1
+    caractère spécial</small>
+
+</div>
+
+
+<div class="form-group">
+  <label for="mdpconfirm">
+    Confirmation du mot de passe :
+  </label>
+  <input (blur)="validateMdp(mdp.value, mdpconfirm.value)" (change)="validateMdp(mdp.value, mdpconfirm.value)"
+    type="password" #mdpconfirm="ngModel" [class.is-invalid]="mdpconfirm.invalid && mdpconfirm.touched || mdpNonEgal "
+    [class.is-valid]="!mdpCourt && !mdpNonEgal && mdp.touched && !mdpNonValide" class="form-control" name="mdpconfirm"
+    ngModel required>
+  <small class="text-danger" *ngIf="mdpNonEgal">Les Mots de passe ne sont pas pareil (le copier-coller ne colle pas
+    votre mdp)</small>
+
+</div>

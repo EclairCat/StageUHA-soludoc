@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
-
+//Fonction de cryptage du Mot de Passe
 module.exports = function (password, callback) {
     bcrypt.genSalt(saltRounds, function (err, salt) {
         if (err) {

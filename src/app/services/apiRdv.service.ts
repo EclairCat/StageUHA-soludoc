@@ -11,11 +11,11 @@ export class apiRdv{
 
     }
 
-    getRdvMedecin(id_medecin:number): Observable<any>{
+    getRdvMedecin(id_medecin:string): Observable<any>{
         return this.http.get("http://localhost:3000/api/rdv/getRdvMedecin/"+id_medecin);
     }
 
-    getRdvClient(id_client:number):Observable<any>{
+    getRdvClient(id_client:string):Observable<any>{
         return this.http.get("http://localhost:3000/api/rdv/getRdvClient/"+id_client);
     }
 
@@ -29,6 +29,14 @@ export class apiRdv{
 
     deleteRdv(rdv: Rdv):Observable<any>{
         return this.http.post("http://localhost:3000/api/rdv/delete",rdv);
+    }
+
+    confirmRdv(rdv:Rdv):Observable<any>{
+        return this.http.post("http://localhost:3000/api/rdv/confirmRdv",rdv);
+    }
+
+    denieRdv(rdv:Rdv):Observable<any>{
+        return this.http.post("http://localhost:3000/api/rdv/denieRdv",rdv);
     }
     
     

@@ -1,0 +1,19 @@
+
+<div class="container border m-2 bg-white">  
+    <div class="row">
+        <h4>Rendez vous avez  {{client.nom}} {{client.prenom}}</h4>
+      </div>
+    <div class="row">
+        <h4>Date : Le {{rdv.date_rdv | date : "d MMMM y" : fr }} à {{rdv.date_rdv | date : "HH:mm" : fr }} </h4>
+    </div>
+    <div class="row">
+      <h4>Confirmation : {{rdv.confirmation}} </h4>
+    </div>
+    <div class="row">
+      <button (click)="cancelRdv()" class="btn btn-danger">Annuler le Rendez-vous</button>
+      <button *ngIf="rdv.confirmation == 'En Attente'" (click)="confirmRdv()" class="btn btn-success">Confirmer le Rendez-vous</button>
+    </div>
+    <div class="row">
+      <small *ngIf="allowCancelRdv"  class="alert alert-danger">êtes Vous sur de votre choix ? si oui cliquer a nouveau</small>
+    </div>     
+</div>

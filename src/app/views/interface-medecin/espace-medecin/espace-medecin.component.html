@@ -1,0 +1,15 @@
+<h1>Espace Medecin</h1>
+
+
+<hr/>
+<h4> Secretariat : </h4>
+
+<div>
+  <a *ngIf="!ifHasSecretaire" class="nav-link text-white btn btn-success" routerLink="../register/secretaire">Ajouter un compte Secretariat</a>
+  <a *ngIf="ifHasSecretaire" class="nav-link text-white btn btn-info" routerLink="../edit/secretaire">Modifier le mot de passe du Compte Secretariat</a>
+  <a *ngIf="ifHasSecretaire" class="nav-link text-white btn btn-danger" routerLink="../delete/secretaire">Supprimer le Secretariat</a>
+</div>
+
+<hr/>
+
+

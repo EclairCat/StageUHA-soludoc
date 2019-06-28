@@ -14,6 +14,10 @@ export class apiMedecin{
         return this.http.get("http://localhost:3000/api/medecin/getAll");
     }
 
+    getMedecinByToken(token:string): Observable<any>{
+        return this.http.get("http://localhost:3000/api/medecin/get/token/"+token);
+    }
+
     getMedecinById(id:number): Observable<any>{
         return this.http.get("http://localhost:3000/api/medecin/get/"+id);
     }
@@ -33,6 +37,10 @@ export class apiMedecin{
 
     loginMedecin(email:string , mdp: string): Observable<any>{
         return this.http.get("http://localhost:3000/api/medecin/login/"+email+"/"+mdp);
+    }
+
+    addSpecialiteMedecin(token:string, speName:string): Observable<any>{
+        return this.http.get("http://localhost:3000/api/medecin/add/specialite/"+token+"/"+speName);
     }
     
 }

@@ -1,0 +1,16 @@
+<div class="container border m-2 bg-white">
+    <div class="row m-2">
+        <h3>{{medecin.nom |titlecase  }} {{medecin.prenom |titlecase}}</h3>  
+      </div>
+      <div class="row m-1">
+          <h5>Specialite : {{medecin.specialite}}</h5>
+      </div>
+      <div class="row m-1">
+            <h5>Adresse : {{medecin.adresse}} </h5>
+      </div>
+      <div class="row m-1"> 
+        <h5>Ville : {{medecin.ville}}</h5>
+      </div>
+      <button (click)="navToRdvMedecin()" class="btn btn-success m-2">Prendre Rendez-vous</button>
+      <button (click)="navToMedecin()" class="btn btn-info">Plus d'info</button>
+</div>

@@ -1,0 +1,17 @@
+
+<H2>Vos Rendez vous confirmé</H2>
+<div *ngIf="listRdvConfirmer.length === 0" class="row alert alert-danger">
+        Aucun Rendez-vous prévue pour le moment.
+    </div>
+<div class="container">
+    <app-rdv-medecin-single *ngFor="let rdv of listRdvConfirmer" [rdv]="rdv"></app-rdv-medecin-single>
+</div>
+
+<hr/>
+<H2>Vos Rendez vous en attente</H2>
+<div *ngIf="listRdvEnAttente.length === 0" class="row alert alert-danger">
+        Aucun Rendez-vous prévue pour le moment.
+</div>
+<div class="container">
+    <app-rdv-medecin-single   *ngFor="let rdv of listRdvEnAttente" [rdv]="rdv"></app-rdv-medecin-single>
+</div>

@@ -1,0 +1,69 @@
+<form class="container-fluid" (ngSubmit)="onSubmit()" #clientForm="ngForm" novalidate>
+
+  <h1>Profil Client</h1>
+  
+    <!--Email -->
+    <p>Email : {{clientModel.email}} </p>
+
+  <hr/>
+
+  <h3> Modifier les informations :</h3>
+
+  <!-- Nom -->
+  <div class="form-group">
+    <label for="nom">
+      Nom :
+    </label>
+    <input type="text" #nom="ngModel" [class.is-invalid]="nom.invalid && nom.touched" class="form-control" name="nom" [(ngModel)]="clientModel.nom" required>
+    <small *ngIf="nom.invalid && nom.touched" class="text-danger">Nom obligatoire</small>
+
+  </div>
+
+  <!-- Prenom -->
+  <div class="form-group">
+    <label for="prenom">
+     Prenom :
+    </label>
+    <input type="text" #prenom="ngModel"  [class.is-invalid]="prenom.invalid && prenom.touched" class="form-control" name="prenom" [(ngModel)]="clientModel.prenom" required>
+    <small *ngIf="prenom.invalid && prenom.touched" class="text-danger">Prenom obligatoire</small>
+  </div>
+
+  <!-- Tel -->
+  <div class="form-group">
+    <label for="tel">
+      Numéro de telephone :
+    </label>
+    <input type="text" #tel="ngModel" [class.is-invalid]="tel.invalid && tel.touched" class="form-control" pattern="^\d{9}$" name="tel" [(ngModel)]="clientModel.tel">
+    <small *ngIf="tel.invalid && tel.touched" class="text-danger">Le numero de telephone doit contenir 10 chiffres</small>
+
+  </div>
+
+
+  <button class="btn btn-primary" type="submit" [disabled]="clientForm.invalid">Enregistrer</button>
+
+  <div *ngIf="editSubmit == 1" class="alert alert-success">Modification Réussit</div>
+  <div *ngIf="editSubmit == 2" class="alert alert-danger">Il y a eu une erreur veuillez reessayer plus tard.</div>
+
+  <hr/>  
+  <h3>Modifier le mot de passe </h3>
+
+  <!-- Mdp -->
+  <div class="form-group">
+      <label for="ancien_mdp2">
+        *Ancien Mot de passe : 
+      </label>
+      <input 
+      type="password" 
+      #ancien_mdp2="ngModel"
+      class="form-control"
+      name= "ancien_mdp2"  
+      [(ngModel)]="ancien_mdp" >      
+      <a class="text-white btn btn-success" (click)="changeMdp()">Changer de mot de passe</a>
+
+      <div>
+          <small *ngIf="ancien_mdp_false" class="alert alert-danger"> Ancien Mot de passe Obligatoire </small>
+      </div>
+
+  </div> 
+
+</form>

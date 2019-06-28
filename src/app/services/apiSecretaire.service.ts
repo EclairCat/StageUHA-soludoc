@@ -22,6 +22,10 @@ export class apiSecretaire{
     editSecretaire(s:Secretaire):Observable<any>{
         return this.http.post("http://localhost:3000/api/secretaire/delete",s);
     }
+
+    login(email:string , mdp: string): Observable<any>{
+        return this.http.get("http://localhost:3000/api/secretaire/login/"+email+"/"+mdp);
+    }
     
     
 }

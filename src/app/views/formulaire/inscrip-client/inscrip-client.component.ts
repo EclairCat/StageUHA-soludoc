@@ -74,6 +74,7 @@ export class InscripClientComponent implements OnInit {
       data => {
         console.log("success!", data);
         localStorage.setItem("token",data);
+        localStorage.setItem("type","0");
         this.inscriptionSubmit = 1;
       },
       error => {

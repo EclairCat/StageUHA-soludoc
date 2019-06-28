@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row m-2">
+    <h1 class=""> {{medecinModel.nom |titlecase  }} {{medecinModel.prenom |titlecase}}</h1>    
+  </div>
+  <hr/>
+  <div class="row m-2">
+    <h2 class="">Specialite : {{medecinModel.specialite | titlecase}}</h2>
+  </div>
+  <div class="row m-2">
+    <p class=""> {{medecinModel.bio_profil}} </p>
+  </div>
+
+  <div class="row m-2">
+    <h3 class=""> Adresse : {{medecinModel.adresse}} </h3>
+  </div>
+  <div class="row m-2">
+    <h3 class=""> Ville  : {{medecinModel.ville}} </h3>
+  </div>
+
+</div>

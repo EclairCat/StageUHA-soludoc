@@ -10,6 +10,10 @@ export class apiClient{
 
     }
 
+    getClientByToken(token:string): Observable<any>{
+        return this.http.get("http://localhost:3000/api/client/get/token/"+token);
+    }
+
     getClientById(id:number): Observable<any>{
         return this.http.get("http://localhost:3000/api/client/get/"+id);
     }
@@ -27,7 +31,7 @@ export class apiClient{
     }
 
     loginClient(email:string, mdp:string):Observable<any>{
-        return this.http.get("http://localhost:3000/api/client/loging/"+email+"/"+mdp);
+        return this.http.get("http://localhost:3000/api/client/login/"+email+"/"+mdp);
     }
     
     
