@@ -1,4 +1,4 @@
-# SiteMedecin
+# Soludoc Rendez-vous médical
 
 Ce projet utilise Angular 7, node.Js et une BDD MySQL
 
