@@ -2,6 +2,10 @@
 
 Ce projet utilise Angular 7, node.Js et une BDD MySQL
 
+Angular CLI: 7.3.6
+Node: 10.15.2
+Angular: 7.2.11
+
 #Instalation 
 
 1) Clonez le projet
