@@ -4,9 +4,9 @@ Ce projet utilise Angular 7, node.Js et une BDD MySQL
 
 #Version :
 
-Angular CLI: v7.3.6
-Node: v10.15.2
-Angular: v7.2.11
+1. Angular CLI: v7.3.6
+2. Node: v10.15.2
+3. Angular: v7.2.11
 
 #Instalation 
 
